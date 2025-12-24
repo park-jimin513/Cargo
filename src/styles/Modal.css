@@ -1,0 +1,148 @@
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex; justify-content: center; align-items: center;
+  background: transparent;
+  z-index: 1000;
+}
+
+.modal-card {
+  position: relative;
+  background: transparent;
+  padding: 30px;
+  border-radius: 20px;
+  width: 340px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-card h2 {
+  margin-bottom: 20px;
+  color: #ffcc00;
+}
+
+.modal-input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.modal-btn {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.modal-btn:hover {
+  transform: scale(1.05);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Role Switch */
+.role-switch {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.role-btn {
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-btn:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+.role-btn.active {
+  background: linear-gradient(135deg, #43cea2, #185a9d);
+  font-weight: bold;
+}
+
+.forgot-link {
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+.forgot-link a {
+  color: #ffcc00;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgot-link a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.switch-link {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.switch-link a {
+  color: #00ffcc;
+  text-decoration: none;
+}
+
+.switch-link a:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+/* Forgot Password Actions */
+.forgot-actions {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.secondary-btn {
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: #fff;
+}
+
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
