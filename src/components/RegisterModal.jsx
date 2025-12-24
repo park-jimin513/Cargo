@@ -1,6 +1,6 @@
 // RegisterModal.jsx
 import { useState } from "react";
-import "../styles/modal.css";
+import "../styles/Modal.css";
 
 import { useAuth } from "../context/AuthContext";
 

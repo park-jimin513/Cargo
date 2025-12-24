@@ -1,4 +1,4 @@
-import "../styles/modal.css";
+import "../styles/Modal.css";
 
 function ForgotPasswordModal({ onClose, onBackToLogin, onBackToRegister }) {
   return (
