@@ -4,14 +4,17 @@ import "../styles/UserHome.css";
 function UserHome({ onLogout }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Close menu when a link is clicked
+  const handleLinkClick = () => setMenuOpen(false);
+
   return (
     <div className="user-home">
       {/* Navbar */}
       <nav className="user-navbar">
         <div className="nav-logo">🚗 CarRental</div>
 
-        {/* Search Bar - Hidden on Mobile via CSS */}
-        <div className="nav-search desktop-only">
+        {/* Search Bar - Desktop & Tablet */}
+        <div className="nav-search desktop-tablet-only">
           <input 
             type="text" 
             placeholder="Search by brand or price..." 
@@ -20,21 +23,29 @@ function UserHome({ onLogout }) {
           <button className="search-icon-btn">🔍</button>
         </div>
 
-        {/* Hamburger for Mobile */}
-        <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-          <div className="bar"></div>
-          <div className="bar"></div>
-          <div className="bar"></div>
+        {/* Hamburger - Visible on Mobile */}
+        <div 
+          className={`hamburger ${menuOpen ? "toggle" : ""}`} 
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <div className="bar1"></div>
+          <div className="bar2"></div>
+          <div className="bar3"></div>
         </div>
 
+        {/* Navigation Links */}
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-          <li className="active">Home</li>
-          <li>Browse</li>
-          <li>My Bookings</li>
-          <li>Support</li>
-          <li className="mobile-logout" onClick={onLogout}>Logout</li>
+          <li className="active" onClick={handleLinkClick}>Home</li>
+          <li onClick={handleLinkClick}>Browse</li>
+          <li onClick={handleLinkClick}>My Bookings</li>
+          <li onClick={handleLinkClick}>Support</li>
+          {/* Logout shown only in mobile drawer */}
+          <li className="mobile-logout" onClick={() => { onLogout(); handleLinkClick(); }}>
+            Logout
+          </li>
         </ul>
 
+        {/* Right Side - Desktop Only */}
         <div className="nav-right desktop-only">
           <span className="user-profile-name">John Doe</span>
           <button className="logout-btn" onClick={onLogout}>
@@ -52,7 +63,7 @@ function UserHome({ onLogout }) {
             
             <button className="explore-btn">View All Cars</button>
 
-            {/* Search Bar - Only Visible on Mobile */}
+            {/* Mobile-Only Search Bar (Matches image_700791.jpg) */}
             <div className="hero-search mobile-only">
               <input 
                 type="text" 
