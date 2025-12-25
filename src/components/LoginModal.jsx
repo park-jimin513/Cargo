@@ -9,6 +9,7 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
   const [step, setStep] = useState("login"); // login | forgot | reset
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // 👁️ NEW
   const [companyName, setCompanyName] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
@@ -19,12 +20,12 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // ✅ Updated Login
+  // ✅ Login
   const handleLogin = async () => {
     setMessage(null);
     const trimmedEmail = String(email || "").trim();
-    // basic email format check
     const emailIsValid = /\S+@\S+\.\S+/.test(trimmedEmail);
+
     if (!trimmedEmail || !password) {
       setMessage({ type: "error", text: "Email and password required." });
       return;
@@ -33,6 +34,7 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
       setMessage({ type: "error", text: "Please enter a valid email address." });
       return;
     }
+
     setLoading(true);
     try {
       const res = await fetch("https://carrentalbackend-ndkk.onrender.com/api/auth/login", {
@@ -41,15 +43,12 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
         body: JSON.stringify({ email: trimmedEmail.toLowerCase(), password, role }),
       });
       const data = await res.json();
+
       if (data.ok) {
-        // persist token via auth context
         auth && auth.login({ token: data.token, role });
         setMessage({ type: "success", text: "Logged in successfully." });
-        // notify parent so it can redirect based on role (backwards compatible)
         onLoginSuccess && onLoginSuccess(role);
-        setTimeout(() => {
-          onClose();
-        }, 800);
+        setTimeout(onClose, 800);
       } else {
         setMessage({ type: "error", text: data.message || "Login failed" });
       }
@@ -66,6 +65,7 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
     setMessage(null);
     const trimmedEmail = String(email || "").trim();
     const emailIsValid = /\S+@\S+\.\S+/.test(trimmedEmail);
+
     if (!trimmedEmail) {
       setMessage({ type: "error", text: "Please enter your email." });
       return;
@@ -74,6 +74,7 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
       setMessage({ type: "error", text: "Please enter a valid email address." });
       return;
     }
+
     setLoading(true);
     try {
       const res = await fetch("https://carrentalbackend-ndkk.onrender.com/api/auth/forgot", {
@@ -82,6 +83,7 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
         body: JSON.stringify({ email: trimmedEmail.toLowerCase() }),
       });
       const data = await res.json();
+
       if (data.ok) {
         setMessage({ type: "success", text: "OTP sent to your email." });
         setOtpSentTo(email);
@@ -100,6 +102,7 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
   // Reset password
   const handleResetPassword = async () => {
     setMessage(null);
+
     if (!otp || !newPassword || !confirmPassword) {
       setMessage({ type: "error", text: "Please fill all fields." });
       return;
@@ -108,6 +111,7 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
       setMessage({ type: "error", text: "Passwords do not match." });
       return;
     }
+
     setLoading(true);
     try {
       const res = await fetch("https://carrentalbackend-ndkk.onrender.com/api/auth/reset", {
@@ -116,10 +120,10 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
         body: JSON.stringify({ email: otpSentTo, otp, newPassword }),
       });
       const data = await res.json();
+
       if (data.ok) {
         setMessage({ type: "success", text: "Password reset successful. Please login." });
         setTimeout(() => {
-          // switch back to login step and prefill email
           setStep("login");
           setPassword("");
           setOtp("");
@@ -146,16 +150,10 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
         {step === "login" && (
           <>
             <div className="role-switch">
-              <button
-                className={role === "user" ? "role-btn active" : "role-btn"}
-                onClick={() => setRole("user")}
-              >
+              <button className={role === "user" ? "role-btn active" : "role-btn"} onClick={() => setRole("user")}>
                 User
               </button>
-              <button
-                className={role === "owner" ? "role-btn active" : "role-btn"}
-                onClick={() => setRole("owner")}
-              >
+              <button className={role === "owner" ? "role-btn active" : "role-btn"} onClick={() => setRole("owner")}>
                 Car Owner
               </button>
             </div>
@@ -169,13 +167,31 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input
-              type="password"
-              placeholder="Password"
-              className="modal-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+
+            {/* 👁️ Password with toggle */}
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="modal-input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "12px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                  userSelect: "none",
+                  fontSize: "18px",
+                }}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </span>
+            </div>
 
             {role === "owner" && (
               <input
@@ -187,35 +203,19 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
               />
             )}
 
-            <button
-              className="modal-btn"
-              onClick={handleLogin}
-              disabled={loading}
-            >
+            <button className="modal-btn" onClick={handleLogin} disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </button>
 
             <p className="forgot-link">
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setStep("forgot");
-                }}
-              >
+              <a href="#" onClick={(e) => { e.preventDefault(); setStep("forgot"); }}>
                 Forgot Password?
               </a>
             </p>
 
             <p className="switch-link">
               Don’t have an account?{" "}
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onSwitchToRegister && onSwitchToRegister();
-                }}
-              >
+              <a href="#" onClick={(e) => { e.preventDefault(); onSwitchToRegister && onSwitchToRegister(); }}>
                 Register
               </a>
             </p>
@@ -233,41 +233,15 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button
-              className="modal-btn"
-              onClick={handleSendOtp}
-              disabled={loading}
-            >
+            <button className="modal-btn" onClick={handleSendOtp} disabled={loading}>
               {loading ? "Sending..." : "Send OTP"}
             </button>
-
-            <div className="forgot-actions">
-              <button className="secondary-btn" onClick={() => setStep("login")}>
-                ⬅ Back to Login
-              </button>
-              <button
-                className="secondary-btn"
-                onClick={() => {
-                  onClose();
-                  onSwitchToRegister && onSwitchToRegister();
-                }}
-              >
-                ⬅ Go to Register
-              </button>
-              <button className="secondary-btn" onClick={onClose}>
-                Cancel
-              </button>
-            </div>
           </>
         )}
 
         {step === "reset" && (
           <>
             <h2>Reset Password</h2>
-            <p>
-              Enter the OTP sent to <b>{otpSentTo}</b> and set a new password.
-            </p>
-
             <input
               type="text"
               placeholder="Enter OTP"
@@ -289,29 +263,13 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-
-            <button
-              className="modal-btn"
-              onClick={handleResetPassword}
-              disabled={loading}
-            >
+            <button className="modal-btn" onClick={handleResetPassword} disabled={loading}>
               {loading ? "Saving..." : "Save Password"}
             </button>
-
-            <div className="forgot-actions">
-              <button className="secondary-btn" onClick={() => setStep("login")}>
-                ⬅ Back to Login
-              </button>
-              <button className="secondary-btn" onClick={onClose}>
-                Cancel
-              </button>
-            </div>
           </>
         )}
 
-        {message && (
-          <p className={`modal-message ${message.type}`}>{message.text}</p>
-        )}
+        {message && <p className={`modal-message ${message.type}`}>{message.text}</p>}
       </div>
     </div>
   );

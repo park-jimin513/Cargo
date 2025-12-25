@@ -84,7 +84,7 @@
   padding: 10px;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.2); /* Added subtle border */
-  background: rgba(255,255,255,0.9);
+  background:transparent;
   outline: none;
   font-size: 1rem;
   box-sizing: border-box; /* Ensures padding doesn't break width */

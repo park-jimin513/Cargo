@@ -1,14 +1,14 @@
-/* ===== Global ===== */
+/* ===== Global & Reset ===== */
 body, html, #root {
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   height: 100%;
   width: 100%;
-  overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
 }
 
-/* ===== App Layout ===== */
+/* ===== App Layout & Theme ===== */
 .app {
   min-height: 100vh;
   color: #222;
@@ -20,7 +20,7 @@ body, html, #root {
   color: #f9f9f9;
 }
 
-/* ===== Responsive Navbar ===== */
+/* ===== Desktop Navbar ===== */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -37,7 +37,7 @@ body, html, #root {
 
 .app.dark .navbar {
   background: rgba(0, 0, 0, 0.4);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-left h1 {
@@ -48,7 +48,7 @@ body, html, #root {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
-/* Navbar Search Area */
+/* Desktop Search */
 .nav-middle {
   flex: 1;
   display: flex;
@@ -77,10 +77,6 @@ body, html, #root {
   color: white;
 }
 
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
 .search-btn {
   border: none;
   padding: 8px 20px;
@@ -91,7 +87,7 @@ body, html, #root {
   font-weight: 600;
 }
 
-/* Navbar Buttons */
+/* Desktop Buttons */
 .nav-right {
   display: flex;
   align-items: center;
@@ -106,13 +102,12 @@ body, html, #root {
   cursor: pointer;
   font-weight: 600;
   white-space: nowrap;
-  transition: transform 0.2s;
 }
 
 .nav-btn { background: linear-gradient(135deg, #ff512f, #dd2476); }
 .toggle-btn { background: linear-gradient(135deg, #24c6dc, #514a9d); }
 
-/* ===== Hero Content ===== */
+/* ===== Content/Hero Area ===== */
 .content {
   display: flex;
   flex-direction: column;
@@ -121,20 +116,24 @@ body, html, #root {
   min-height: calc(100vh - 80px);
   text-align: center;
   padding: 20px;
+  position: relative;
 }
 
 .content h2 {
-  font-size: 3rem; /* Larger for desktop */
-  margin-bottom: 15px;
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
 .content p {
   font-size: 1.4rem;
   color: #f0f0f0;
   max-width: 600px;
+  margin-bottom: 30px;
 }
 
-/* ===== Background Elements ===== */
+/* ===== Background & Video ===== */
 .bg-video {
   position: fixed;
   top: 0; left: 0;
@@ -152,67 +151,102 @@ body, html, #root {
 }
 
 /* =========================================
-   📱 MEDIA QUERIES (RESPONSIVENESS)
+   📱 MOBILE DESIGN (Updates for image_700791.jpg and image_7f6145.jpg)
    ========================================= */
 
-/* 💻 Laptops/Tablets (max-width: 1024px) */
-@media (max-width: 1024px) {
-  .navbar { padding: 15px 20px; }
-  .nav-left h1 { font-size: 1.5rem; }
-  .search-input { min-width: 150px; }
-  .content h2 { font-size: 2.5rem; }
-}
-
-/* 📲 Tablets/Large Phones (max-width: 768px) */
 @media (max-width: 768px) {
-  .navbar {
-    flex-wrap: wrap; /* Wraps search bar to second line if needed */
-    padding: 10px 15px;
-  }
+  /* Hide desktop search in nav */
+  .nav-middle { display: none; }
+  
+  /* Navbar adjustments */
+  .navbar { padding: 10px 20px; height: 60px; }
+  .nav-left h1 { font-size: 1.4rem; }
 
-  .nav-middle {
-    order: 3; /* Move search bar below logo and buttons */
+  /* Hero Content - Adjusted for mobile stack */
+  .content { justify-content: flex-start; padding-top: 80px; }
+  .content h2 { font-size: 2.2rem; }
+  .content p { font-size: 1rem; margin-bottom: 20px; }
+
+  /* Top Action Buttons (Login/Register/Dark) */
+  .mobile-action-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 25px;
     width: 100%;
-    margin: 10px 0 0 0;
+    justify-content: flex-start; /* As seen in image_7f5dc2.jpg */
   }
 
-  .search-form { max-width: 100%; }
+  /* Specific Button Styles */
+  .m-btn-login { background: #ff4d6d; padding: 6px 15px; border-radius: 20px; }
+  .m-btn-reg { background: #ff4d6d; padding: 6px 15px; border-radius: 20px; }
+  .m-btn-dark { background: #4a90e2; padding: 6px 15px; border-radius: 20px; display: flex; align-items: center; gap: 4px; }
 
-  .nav-right { gap: 8px; }
-
-  .nav-btn, .toggle-btn {
-    padding: 8px 12px;
-    font-size: 0.85rem;
+  /* Vertical Sidebar Buttons */
+  .mobile-side-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: auto; /* Align to the left side */
+    margin-bottom: 30px;
   }
 
-  .content h2 { font-size: 2rem; }
-  .content p { font-size: 1.1rem; }
+  .side-pill {
+    padding: 8px 25px;
+    border-radius: 50px;
+    border: none;
+    color: white;
+    font-weight: 600;
+    width: fit-content;
+  }
+
+  /* Centered Search Bar in Hero */
+  .hero-search-mobile {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    width: 90%;
+    max-width: 350px;
+    padding: 5px 5px 5px 20px;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    margin-top: 10px;
+  }
+
+  .hero-search-mobile input {
+    border: none;
+    outline: none;
+    flex: 1;
+    color: #333;
+    font-size: 0.95rem;
+  }
+
+  .hero-search-mobile .search-icon-circle {
+    background: #ffcc00;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    cursor: pointer;
+  }
+
+  /* Main Call to Action Button */
+  .view-all-btn {
+    background: #ffcc00;
+    color: #000;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-weight: bold;
+    border: 2px solid #fff;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+  }
 }
 
-/* 📱 Small Phones (max-width: 480px) */
-@media (max-width: 480px) {
-  .nav-left h1 { font-size: 1.2rem; }
-  
-  /* Stack buttons on very small screens */
-  .nav-right {
-    gap: 5px;
-  }
-
-  .nav-btn {
-    padding: 6px 10px;
-    font-size: 0.75rem;
-  }
-
-  .content {
-    justify-content: flex-start;
-    padding-top: 60px;
-  }
-
+/* 📱 Very Small Screens */
+@media (max-width: 400px) {
   .content h2 { font-size: 1.8rem; }
-  .content p { font-size: 0.95rem; }
-  
-  .search-btn {
-    padding: 8px 12px;
-    font-size: 0.9rem;
-  }
+  .mobile-action-bar { transform: scale(0.9); margin-left: -10px; }
 }
