@@ -1,0 +1,130 @@
+/* Reuse the cosmic background from your fleet page */
+.my-cars-container {
+  padding: 3rem 2rem;
+  max-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at center, #2e2a5e 0%, #1a1635 100%);
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Table Container with Glassmorphism */
+.table-container {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  overflow-x: auto; /* Ensures responsiveness on small screens */
+  flex-grow: 1;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* Header Styling */
+.bookings-table th {
+  padding: 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+/* Row Styling */
+.bookings-table td {
+  padding: 1.5rem 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 1rem;
+}
+
+.bookings-table tr:last-child td {
+  border-bottom: none;
+}
+
+.bookings-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Specific Cell Styling */
+.car-name {
+  font-weight: 700;
+  color: #fff;
+}
+
+.price-cell {
+  font-weight: 700;
+  color: #00d2ff;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.status-badge.confirmed {
+  background: rgba(46, 213, 115, 0.2);
+  color: #2ed573;
+  border-color: rgba(46, 213, 115, 0.3);
+  box-shadow: 0 0 10px rgba(46, 213, 115, 0.2);
+}
+
+/* Back Button - Same as Fleet UI */
+.back-btn {
+  align-self: flex-start;
+  margin-top: 2rem;
+  background: #ffffff;
+  color: #1a1635;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.6);
+}
+
+/* Mobile Responsive Table */
+@media (max-width: 768px) {
+  .bookings-table th, .bookings-table td {
+    padding: 1rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .back-btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}

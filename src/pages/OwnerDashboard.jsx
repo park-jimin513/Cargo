@@ -1,69 +1,130 @@
 import React, { useState } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink,
+  Navigate,
+} from "react-router-dom";
 import "../styles/OwnerDashboard.css";
+
+// ALL imports from pages folder
+import AddCar from "./AddCar";
+import MyCars from "./MyCars";
+import Earnings from "./Earnings";
+import Bookings from "./Bookings";
+import Profile from "./Profile";
+import Help from "./Help";
+import Settings from "./Settings";
 
 function OwnerDashboard({ onLogout }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showAddCarForm, setShowAddCarForm] = useState(false);
+  const [cars, setCars] = useState([]);
 
   return (
     <div className="owner-dashboard">
-      {/* Glass Navbar */}
-      <nav className="owner-navbar">
-        <div className="nav-logo">🚘 Owner<span>Panel</span></div>
-
-        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-          <li className="active">Dashboard</li>
-          <li>My Cars</li>
-          <li>Earnings</li>
-          <li>Bookings</li>
-          <li className="mobile-only" onClick={onLogout}>Logout</li>
-        </ul>
-
-        <div className="nav-right desktop-only">
-          <div className="owner-info">
-            <span className="owner-name">Admin Owner</span>
-            <span className="owner-status">Verified</span>
+      <BrowserRouter>
+        {/* NAVBAR */}
+        <nav className="owner-navbar">
+          <div className="nav-logo">
+            🚘 Owner<span>Panel</span>
           </div>
-          <button onClick={onLogout} className="logout-btn">Logout</button>
-        </div>
 
-        {/* Mobile Hamburger */}
-        <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-          <div className={`bar ${menuOpen ? "open" : ""}`}></div>
-          <div className={`bar ${menuOpen ? "open" : ""}`}></div>
-          <div className={`bar ${menuOpen ? "open" : ""}`}></div>
-        </div>
-      </nav>
+          <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+            <li>
+              <NavLink
+                to="/owner"
+                end
+                onClick={() => {
+                  setShowAddCarForm(false);
+                  setMenuOpen(false);
+                }}
+              >
+                Dashboard
+              </NavLink>
+            </li>
 
-      {/* Main Content */}
-      <main className="dashboard-hero">
-        <div className="hero-overlay">
-          <div className="home-content">
-            <h1>Welcome, Car Owner 🚘</h1>
-            <p>Manage your fleet, track revenue, and handle bookings effortlessly.</p>
-            
-            {/* Dashboard Quick Stats */}
-            <div className="stats-grid">
-              <div className="stat-card">
-                <h3>12</h3>
-                <p>Active Cars</p>
-              </div>
-              <div className="stat-card">
-                <h3>$4,250</h3>
-                <p>This Month</p>
-              </div>
-              <div className="stat-card">
-                <h3>4.9 ★</h3>
-                <p>Rating</p>
-              </div>
+            <li><NavLink to="/owner/mycars" onClick={() => setMenuOpen(false)}>My Cars</NavLink></li>
+            <li><NavLink to="/owner/earnings" onClick={() => setMenuOpen(false)}>Earnings</NavLink></li>
+            <li><NavLink to="/owner/bookings" onClick={() => setMenuOpen(false)}>Bookings</NavLink></li>
+            <li><NavLink to="/owner/profile" onClick={() => setMenuOpen(false)}>Profile</NavLink></li>
+            <li><NavLink to="/owner/help" onClick={() => setMenuOpen(false)}>Help</NavLink></li>
+            <li><NavLink to="/owner/settings" onClick={() => setMenuOpen(false)}>Settings</NavLink></li>
+
+            <li className="mobile-only">
+              <button onClick={onLogout} className="logout-btn">Logout</button>
+            </li>
+          </ul>
+
+          <div className="nav-right desktop-only">
+            <div className="owner-info">
+              <span className="owner-name">Owner</span><br/>
+              <span className="owner-status">Verified</span>{/* You can add a verified icon here if desired */  }
             </div>
-
-            <div className="action-buttons">
-              <button className="primary-btn">Add New Car</button>
-              <button className="secondary-btn">View Earnings</button>
-            </div>
+            <button onClick={onLogout} className="logout-btn">Logout</button>
           </div>
-        </div>
-      </main>
+
+          <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+            <div className={`bar ${menuOpen ? "open" : ""}`} />
+            <div className={`bar ${menuOpen ? "open" : ""}`} />
+            <div className={`bar ${menuOpen ? "open" : ""}`} />
+          </div>
+        </nav>
+
+        {/* MAIN */}
+        <main className="dashboard-hero">
+          <div className="hero-overlay">
+            <Routes>
+              {/* Dashboard */}
+              <Route
+                path="/owner"
+                element={
+                  showAddCarForm ? (
+                    <AddCar
+                      onClose={() => setShowAddCarForm(false)}
+                      onCarAdded={(newCar) =>
+                        setCars((prev) => [newCar, ...prev])
+                      }
+                    />
+                  ) : (
+                    <div className="home-content">
+                      <h1>Welcome, Car Owner 🚘</h1>
+                      <p>Manage your fleet and revenue effortlessly.</p>
+
+                      <div className="action-buttons">
+                        <button
+                          className="primary-btn"
+                          onClick={() => setShowAddCarForm(true)}
+                        >
+                          Add New Car
+                        </button>
+
+                        <NavLink to="/owner/earnings">
+                          <button className="secondary-btn">View Earnings</button>
+                        </NavLink>
+                      </div>
+                    </div>
+                  )
+                }
+              />
+
+              {/* Other pages */}
+              <Route
+                path="/owner/mycars"
+                element={<MyCars cars={cars} onAddNew={() => setShowAddCarForm(true)} />}
+              />
+              <Route path="/owner/earnings" element={<Earnings />} />
+              <Route path="/owner/bookings" element={<Bookings />} />
+              <Route path="/owner/profile" element={<Profile />} />
+              <Route path="/owner/help" element={<Help />} />
+              <Route path="/owner/settings" element={<Settings />} />
+
+              <Route path="*" element={<Navigate to="/owner" replace />} />
+            </Routes>
+          </div>
+        </main>
+      </BrowserRouter>
     </div>
   );
 }

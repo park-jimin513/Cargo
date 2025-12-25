@@ -1,0 +1,133 @@
+/* Container & Background */
+.earnings-page-container {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at center, #2e2a5e 0%, #1a1635 100%);
+  color: #fff;
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  padding: 2.5rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-size: 3rem;
+  margin: 10px 0;
+  font-weight: 800;
+}
+
+.stat-trend {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.stat-trend.positive { color: #2ed573; }
+
+/* Glow Accents */
+.gold-glow { border-top: 4px solid #ffd700; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1); }
+.blue-glow { border-top: 4px solid #00d2ff; box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1); }
+
+/* Transactions Table */
+.transactions-section {
+  padding: 2rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.export-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.earnings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.earnings-table th {
+  text-align: left;
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.earnings-table td {
+  padding: 1.2rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tx-id { color: #00d2ff; font-family: monospace; }
+.tx-amount { font-weight: 700; }
+
+.status-tag {
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.status-tag.paid { background: rgba(46, 213, 115, 0.2); color: #2ed573; }
+.status-tag.processing { background: rgba(255, 165, 2, 0.2); color: #ffa502; }
+
+/* Back Button */
+.back-btn-pill {
+  align-self: flex-start;
+  margin-top: 2.5rem;
+  background: #fff;
+  color: #1a1635;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat-value { font-size: 2.2rem; }
+  .transactions-section { overflow-x: auto; }
+}

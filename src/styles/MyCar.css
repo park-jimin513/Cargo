@@ -1,0 +1,125 @@
+/* Container Setup */
+.my-cars-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* Flexbox keeps the back button at the bottom */
+  display: flex;
+  flex-direction: column;
+  min-height: 90vh; 
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+}
+
+/* Header Styling */
+.section-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, #ffffff, #a1a1a1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Grid and Empty State */
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+  flex-grow: 1; /* Allows this area to expand so button stays down */
+}
+
+.empty-message {
+  grid-column: 1 / -1; /* Spans full grid width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 15px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* Glassmorphism Card Effect */
+.car-card.glass-morphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.car-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.car-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.car-info {
+  padding: 1.5rem;
+}
+
+.car-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+.car-info p {
+  margin: 0;
+  color: #00d2ff;
+  font-weight: 600;
+}
+
+/* Bottom-Left Back Button */
+.back-btn {
+  align-self: flex-start; /* Aligns to the left */
+  margin-top: auto;       /* Pushes to the bottom */
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.8rem 1.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #ffffff;
+  color: #000;
+  transform: translateX(-5px);
+}
+
+/* --- Media Queries --- */
+
+/* Tablet View */
+@media (max-width: 768px) {
+  .cars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile View */
+@media (max-width: 480px) {
+  .my-cars-container { padding: 1rem; }
+  .cars-grid { grid-template-columns: 1fr; }
+  .back-btn { width: 100%; justify-content: center; }
+}
