@@ -13,16 +13,6 @@ function UserHome({ onLogout }) {
       <nav className="user-navbar">
         <div className="nav-logo">🚗 CarRental</div>
 
-        {/* Search Bar - Desktop & Tablet */}
-        <div className="nav-search desktop-tablet-only">
-          <input 
-            type="text" 
-            placeholder="Search by brand or price..." 
-            className="search-input"
-          />
-          <button className="search-icon-btn">🔍</button>
-        </div>
-
         {/* Hamburger - Visible on Mobile */}
         <div 
           className={`hamburger ${menuOpen ? "toggle" : ""}`} 
@@ -39,7 +29,6 @@ function UserHome({ onLogout }) {
           <li onClick={handleLinkClick}>Browse</li>
           <li onClick={handleLinkClick}>My Bookings</li>
           <li onClick={handleLinkClick}>Support</li>
-          {/* Logout shown only in mobile drawer */}
           <li className="mobile-logout" onClick={() => { onLogout(); handleLinkClick(); }}>
             Logout
           </li>
@@ -63,14 +52,14 @@ function UserHome({ onLogout }) {
             
             <button className="explore-btn">View All Cars</button>
 
-            {/* Mobile-Only Search Bar (Matches image_700791.jpg) */}
-            <div className="hero-search mobile-only">
+            {/* ✅ UPDATED: Search bar with button at the corner */}
+            <div className="hero-search">
               <input 
                 type="text" 
-                placeholder="Search cars by brand or price..." 
+                placeholder="Search cars..." 
                 className="hero-search-input"
               />
-              <button className="hero-search-btn">🔍</button>
+              <button className="hero-search-btn">Search</button>
             </div>
           </div>
         </div>

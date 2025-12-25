@@ -1,23 +1,19 @@
 /* ===== Base & Global Styles ===== */
 .user-home {
   min-height: 100vh;
-  background: #0e0e0e;
-  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #0e0e0e; 
+  font-family: "Segoe UI", Roboto, sans-serif;
+  color: #fff;
 }
 
-.mobile-only { display: none; }
-.desktop-only { display: flex; }
-.desktop-tablet-only { display: flex; }
-
-/* ===== Navbar (Glassmorphism) ===== */
+/* ===== Navbar ===== */
 .user-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 15px 5%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
   position: fixed;
   width: 100%;
   top: 0;
@@ -26,76 +22,11 @@
   box-sizing: border-box;
 }
 
-.nav-logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #ffc107;
-  white-space: nowrap;
-}
+.nav-logo { font-size: 1.5rem; font-weight: 800; color: #ffc107; }
 
-/* ===== Navbar Search ===== */
-.nav-search {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50px;
-  padding: 5px 5px 5px 20px;
-  width: 100%;
-  max-width: 350px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all 0.3s ease;
-}
-
-.nav-search:focus-within {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #ffc107;
-}
-
-.search-input {
-  background: transparent;
-  border: none;
-  color: white;
-  width: 100%;
-  outline: none;
-  font-size: 0.9rem;
-}
-
-.search-icon-btn {
-  background: #ffc107;
-  border: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ===== Nav Links ===== */
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 25px;
-}
-
-.nav-links li {
-  color: #bdbdbd;
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.nav-links li.active, .nav-links li:hover {
-  color: #ffc107;
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.user-profile-name { color: white; font-size: 0.9rem; }
+.nav-links { display: flex; list-style: none; gap: 25px; }
+.nav-links li { color: #bdbdbd; cursor: pointer; transition: 0.3s; }
+.nav-links li.active, .nav-links li:hover { color: #ffc107; }
 
 .logout-btn {
   background: linear-gradient(135deg, #ff6f61, #ffc107);
@@ -105,15 +36,12 @@
   border-radius: 50px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
 }
-
-.logout-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
 
 /* ===== Hero Section ===== */
 .hero-section {
   height: 100vh;
-  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
               url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat;
 }
 
@@ -125,116 +53,98 @@
   padding: 0 20px;
 }
 
-.home-content h1 { font-size: 4rem; color: #fff; margin-bottom: 10px; font-weight: 800; }
+.home-content { text-align: center; width: 100%; }
+.home-content h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 10px; }
 .home-content p { color: #e0e0e0; font-size: 1.2rem; margin-bottom: 30px; }
 
 .explore-btn {
-  padding: 15px 45px;
+  padding: 14px 40px;
   background: #ffc107;
-  border: 2px solid #fff;
+  border: none;
   border-radius: 50px;
-  color: #fff;
+  color: #000;
   font-weight: bold;
-  font-size: 1.1rem;
+  margin-bottom: 30px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 /* =========================================
-   📱 RESPONSIVE MEDIA QUERIES
+   🔍 SEARCH BAR (MOBILE & DESKTOP)
    ========================================= */
-
-/* 🖥️ Desktops/Laptops (Large) */
-@media (min-width: 1200px) {
-  .home-content h1 { font-size: 4.5rem; }
+.hero-search {
+  background: rgba(255, 255, 255, 0.12); /* Glass effect */
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 5px 6px 5px 22px; /* Extra left padding for text */
+  width: 90%;
+  max-width: 450px;
+  margin: 0 auto;
+  display: flex; /* Flexbox puts items side-by-side */
+  align-items: center;
+  justify-content: space-between; /* Pushes button to the corner */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* 💻 Tablets/Small Laptops (769px - 1024px) */
-@media (max-width: 1024px) {
-  .nav-links { gap: 15px; }
-  .nav-search { max-width: 250px; }
-  .home-content h1 { font-size: 3.5rem; }
+.hero-search-input {
+  border: none;
+  outline: none;
+  flex: 1; /* Input takes up all available space */
+  font-size: 1rem;
+  color: #ffffff;
+  background: transparent;
 }
 
-/* 📲 Mobile View (768px and below) */
+.hero-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Teal Button inside the corner */
+.hero-search-btn {
+  background: #2cb3a5; /* Teal color from reference */
+  border: none;
+  padding: 10px 24px;
+  border-radius: 50px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+  white-space: nowrap;
+}
+
+.hero-search-btn:hover {
+  background: #25a093;
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   📲 MOBILE DRAWER
+   ========================================= */
 @media (max-width: 768px) {
-  .desktop-only, .desktop-tablet-only { display: none; }
-  .mobile-only { display: flex; }
-  .mobile-logout { display: block !important; color: #ff6f61 !important; }
-
-  .user-navbar { padding: 12px 20px; height: 65px; }
-
-  /* Hamburger Bars */
+  .desktop-only { display: none; }
+  .home-content h1 { font-size: 2.4rem; }
+  
   .hamburger div {
     width: 25px;
     height: 3px;
-    background-color: white;
+    background-color: #ffc107;
     margin: 5px;
-    transition: 0.4s;
+    border-radius: 2px;
   }
 
-  /* Hamburger Toggle Animation */
-  .toggle .bar1 { transform: rotate(-45deg) translate(-5px, 6px); }
-  .toggle .bar2 { opacity: 0; }
-  .toggle .bar3 { transform: rotate(45deg) translate(-5px, -6px); }
-
-  /* Slide-out Drawer */
   .nav-links {
     position: fixed;
     right: -100%;
     top: 65px;
     height: calc(100vh - 65px);
-    background: #0e0e0e;
-    display: flex;
+    background: #111;
     flex-direction: column;
-    align-items: center;
     width: 75%;
-    padding-top: 50px;
-    transition: 0.5s ease;
-    border-left: 1px solid rgba(255,255,255,0.1);
+    padding: 40px;
+    transition: 0.4s ease;
   }
 
   .nav-links.active { right: 0; }
-  .nav-links li { font-size: 1.2rem; margin: 15px 0; }
-
-  /* Hero Adjustments for Mobile */
-  .home-content h1 { font-size: 2.2rem; }
-  .home-content p { font-size: 1rem; }
-  .explore-btn { padding: 12px 30px; font-size: 0.9rem; }
-
-  /* Search bar specifically for image_700791.jpg style */
-  .hero-search {
-    background: #fff;
-    border-radius: 50px;
-    padding: 5px 5px 5px 20px;
-    width: 100%;
-    max-width: 320px;
-    margin: 30px auto 0;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-  }
-
-  .hero-search-input {
-    border: none;
-    outline: none;
-    width: 100%;
-    font-size: 0.9rem;
-    color: #333;
-  }
-
-  .hero-search-btn {
-    background: #ffc107;
-    border: none;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-}
-
-/* 📱 Very Small Phones (< 400px) */
-@media (max-width: 400px) {
-  .home-content h1 { font-size: 1.8rem; }
-  .nav-logo { font-size: 1.2rem; }
+  .mobile-logout { color: #ff6f61 !important; font-weight: bold; margin-top: 20px; }
 }
