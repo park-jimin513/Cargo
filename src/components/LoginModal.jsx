@@ -45,7 +45,13 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
       const data = await res.json();
 
       if (data.ok) {
-        auth && auth.login({ token: data.token, role });
+        // If backend returned user info include it (name/email). Otherwise merge basic fields.
+        const payload = { token: data.token, role };
+        if (data.user) {
+          payload.name = data.user.fullName || data.user.name || payload.name;
+          payload.email = data.user.email || payload.email;
+        }
+        auth && auth.login(payload);
         setMessage({ type: "success", text: "Logged in successfully." });
         onLoginSuccess && onLoginSuccess(role);
         setTimeout(onClose, 800);
@@ -85,8 +91,8 @@ function LoginModal({ onClose, onSwitchToRegister, onSwitchToLogin, onLoginSucce
       const data = await res.json();
 
       if (data.ok) {
-        setMessage({ type: "success", text: "OTP sent to your email." });
-        setOtpSentTo(email);
+        setMessage({ type: "success", text: data.message || "OTP sent to your email." });
+        setOtpSentTo(trimmedEmail);
         setTimeout(() => setStep("reset"), 600);
       } else {
         setMessage({ type: "error", text: data.message || "Failed to send OTP" });

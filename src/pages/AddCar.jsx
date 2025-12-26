@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/AddCar.css";
 
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+
 function AddCar({ onClose, onCarAdded }) {
   const [carData, setCarData] = useState({
     name: "",
@@ -19,16 +21,31 @@ function AddCar({ onClose, onCarAdded }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newCar = {
-      id: Date.now(),
-      ...carData,
-      image: carData.image
-        ? URL.createObjectURL(carData.image)
-        : null,
-    };
+    // Send to backend
+    const form = new FormData();
+    form.append("name", carData.name);
+    form.append("brand", carData.brand);
+    form.append("price", carData.price);
+    form.append("color", carData.color);
+    if (carData.image) form.append("image", carData.image);
 
-    onCarAdded(newCar);
-    onClose();
+    fetch(`${API_BASE}/api/cars`, {
+      method: "POST",
+      body: form,
+    })
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.ok && res.car) {
+          onCarAdded(res.car);
+          onClose();
+        } else {
+          alert(res.message || "Failed to save car");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Failed to save car");
+      });
   };
 
   const navigate = useNavigate();

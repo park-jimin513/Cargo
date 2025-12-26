@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 import {
   BrowserRouter,
   Routes,
   Route,
   NavLink,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 import "../styles/OwnerDashboard.css";
 
 // ALL imports from pages folder
 import AddCar from "./AddCar";
 import MyCars from "./MyCars";
+import ManageCars from "./ManageCars";
 import Earnings from "./Earnings";
 import Bookings from "./Bookings";
 import Profile from "./Profile";
@@ -18,9 +21,33 @@ import Help from "./Help";
 import Settings from "./Settings";
 
 function OwnerDashboard({ onLogout }) {
+  const auth = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAddCarForm, setShowAddCarForm] = useState(false);
   const [cars, setCars] = useState([]);
+  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+
+  useEffect(() => {
+    // fetch cars from backend on mount
+    fetch(`${API_BASE}/api/cars`)
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.ok && res.cars) setCars(res.cars);
+      })
+      .catch((err) => console.error("fetch cars error", err));
+  }, []);
+
+  // Wrapper component rendered by the Route so we can use hooks like useNavigate
+  function AddCarRouteWrapper({ setCars }) {
+    const navigate = useNavigate();
+
+    return (
+      <AddCar
+        onClose={() => navigate("/owner")}
+        onCarAdded={(newCar) => setCars((prev) => [newCar, ...prev])}
+      />
+    );
+  }
 
   return (
     <div className="owner-dashboard">
@@ -46,6 +73,7 @@ function OwnerDashboard({ onLogout }) {
             </li>
 
             <li><NavLink to="/owner/mycars" onClick={() => setMenuOpen(false)}>My Cars</NavLink></li>
+            <li><NavLink to="/owner/managecars" onClick={() => setMenuOpen(false)}>Manage Cars</NavLink></li>            
             <li><NavLink to="/owner/earnings" onClick={() => setMenuOpen(false)}>Earnings</NavLink></li>
             <li><NavLink to="/owner/bookings" onClick={() => setMenuOpen(false)}>Bookings</NavLink></li>
             <li><NavLink to="/owner/profile" onClick={() => setMenuOpen(false)}>Profile</NavLink></li>
@@ -59,8 +87,8 @@ function OwnerDashboard({ onLogout }) {
 
           <div className="nav-right desktop-only">
             <div className="owner-info">
-              <span className="owner-name">Owner</span><br/>
-              <span className="owner-status">Verified</span>{/* You can add a verified icon here if desired */  }
+              <span className="owner-name">{(auth && auth.user && (auth.user.name || auth.user.fullName)) || "Owner"}</span><br/>
+              <span className="owner-status">Verified</span>
             </div>
             <button onClick={onLogout} className="logout-btn">Logout</button>
           </div>
@@ -80,39 +108,37 @@ function OwnerDashboard({ onLogout }) {
               <Route
                 path="/owner"
                 element={
-                  showAddCarForm ? (
-                    <AddCar
-                      onClose={() => setShowAddCarForm(false)}
-                      onCarAdded={(newCar) =>
-                        setCars((prev) => [newCar, ...prev])
-                      }
-                    />
-                  ) : (
-                    <div className="home-content">
-                      <h1>Welcome, Car Owner 🚘</h1>
-                      <p>Manage your fleet and revenue effortlessly.</p>
+                  <div className="home-content">
+                    <h1>Welcome, Car Owner 🚘</h1>
+                    <p>Manage your fleet and revenue effortlessly.</p>
 
-                      <div className="action-buttons">
-                        <button
-                          className="primary-btn"
-                          onClick={() => setShowAddCarForm(true)}
-                        >
-                          Add New Car
-                        </button>
+                    <div className="action-buttons">
+                      <NavLink to="/owner/add">
+                        <button className="primary-btn">Add New Car</button>
+                      </NavLink>
 
-                        <NavLink to="/owner/earnings">
-                          <button className="secondary-btn">View Earnings</button>
-                        </NavLink>
-                      </div>
+                      <NavLink to="/owner/earnings">
+                        <button className="secondary-btn">View Earnings</button>
+                      </NavLink>
                     </div>
-                  )
+                  </div>
                 }
+              />
+
+              {/* Route for Add Car page */}
+              <Route
+                path="/owner/add"
+                element={<AddCarRouteWrapper setCars={setCars} />}
               />
 
               {/* Other pages */}
               <Route
                 path="/owner/mycars"
                 element={<MyCars cars={cars} onAddNew={() => setShowAddCarForm(true)} />}
+              />
+              <Route
+                path="/owner/managecars"
+                element={<ManageCars cars={cars} setCars={setCars} />}
               />
               <Route path="/owner/earnings" element={<Earnings />} />
               <Route path="/owner/bookings" element={<Bookings />} />

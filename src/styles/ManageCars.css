@@ -1,0 +1,251 @@
+/* Container & Layout */
+.manage-cars-container {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: radial-gradient(circle at center, #2e2a5e 0%, #1a1635 100%);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-header p {
+  color: #00d2ff;
+  font-weight: 600;
+}
+
+/* Glass Table Styling */
+.table-wrapper {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 1.5rem;
+  overflow-x: auto;
+}
+
+.manage-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.manage-table th {
+  padding: 1.2rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 1px;
+}
+
+.manage-table td {
+  padding: 1.5rem 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.car-name-text {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Inputs in Editing Mode */
+.editing-row input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #00d2ff;
+  border-radius: 8px;
+  color: #fff;
+  padding: 8px;
+  width: 100%;
+}
+
+/* Status Pills */
+.status-pill {
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status-pill.available { background: rgba(46, 213, 115, 0.2); color: #2ed573; }
+.status-pill.rented { background: rgba(255, 71, 87, 0.2); color: #ff4757; }
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn, .save-icon-btn {
+  background: #00d2ff;
+  border: none;
+  padding: 6px 15px;
+  border-radius: 8px;
+  color: #1a1635;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: rgba(255, 71, 87, 0.1);
+  border: 1px solid #ff4757;
+  color: #ff4757;
+  padding: 6px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #ff4757;
+  color: #fff;
+}
+
+/* Footer Buttons */
+.footer-actions {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-btn-pill {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 10px 25px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.add-new-btn {
+  background: #fff;
+  color: #1a1635;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 800;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  cursor: pointer;
+}
+
+.empty-fleet-msg {
+  text-align: center;
+  padding: 4rem;
+  color: rgba(255,255,255,0.4);
+  font-style: italic;
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+  .manage-cars-container { padding: 2rem 1rem; }
+  
+  .manage-table th, .manage-table td {
+    padding: 1rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .footer-actions {
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
+  
+  .add-new-btn, .back-btn-pill {
+    width: 100%;
+  }
+}
+
+/* Modal overlay and compact card for AddCar */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 9999;
+  padding: 20px;
+}
+
+.compact-modal .form-container {
+  max-width: 380px;
+  width: 100%;
+  margin: 0; /* remove the default margin in AddCar.css */
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(4, 8, 20, 0.7);
+  transform: translateY(0);
+  max-height: 82vh; /* keep card visible on most screens */
+  overflow-y: auto;
+}
+
+/* Slightly smaller header inside compact modal */
+.compact-modal .form-header h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Ensure the close button sits flush in compact card */
+.compact-modal .close-x {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.8);
+}
+
+/* Tighter form spacing inside the compact modal */
+.compact-modal .add-car-form {
+  gap: 12px;
+}
+
+.compact-modal .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.compact-modal label {
+  font-size: 0.78rem;
+}
+
+.compact-modal input[type="text"],
+.compact-modal input[type="number"],
+.compact-modal input[type="file"] {
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.compact-modal input:focus {
+  box-shadow: 0 0 8px rgba(161, 196, 253, 0.2);
+}
+
+.compact-modal .submit-btn {
+  padding: 10px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+}
+
+/* Make sure very small screens still show modal fully */
+@media (max-width: 480px) {
+  .compact-modal .form-container {
+    max-width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    max-height: 92vh;
+  }
+
+  .compact-modal .form-row {
+    grid-template-columns: 1fr; /* stack price and color on narrow screens */
+  }
+}

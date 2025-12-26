@@ -42,7 +42,11 @@ function RegisterModal({ onClose, onSwitchToLogin }) {
         setMessage({ type: "success", text: "Registered successfully. You can now login." });
         // optionally auto-login user after register (if backend returns token)
         if (data.token) {
-          auth && auth.login({ token: data.token, role });
+          const payload = { token: data.token, role };
+          // prefer backend user info, fall back to entered fullName
+          if (data.user) payload.name = data.user.fullName || data.user.name;
+          else payload.name = fullName || undefined;
+          auth && auth.login(payload);
         }
         // optionally close and open login after a short time
         setTimeout(() => {
